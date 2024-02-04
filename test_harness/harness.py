@@ -6,7 +6,7 @@ import os
 import sys
 
 
-# in your Solution file,
+# in your Solution file, e.g. naming_a_company.py
 # write:
 # from test_harness.harness import harness_run
 # and at the bottom:
