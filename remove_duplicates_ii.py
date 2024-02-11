@@ -1,3 +1,4 @@
+from test_harness.harness import harness_run
 class Solution:
     def removeDuplicates(self, nums):
         k = 1
@@ -23,3 +24,7 @@ print(nums[:k])
 
 k = runner.removeDuplicates(nums1)
 print(nums1[:k])
+
+
+if __name__ == "__main__":
+    harness_run(Solution(), [nums, nums1])
