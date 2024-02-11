@@ -6,20 +6,26 @@ import os
 import sys
 
 
+# dependencies installation:
+# pip install memory-profiler
+# pip install matplotlib
+
 # in your Solution file, e.g. naming_a_company.py
 # write:
 # from test_harness.harness import harness_run
-# and at the bottom:
 # if __name__ == "__main__":
 #     harness_run(Solution(), [test, test1])
+
 
 # run:
 # mprof run -MC naming_a_company.py
 # run:
 # mprof plot
-# ignore the bottom line in graph (usually blue)
-# ignore "child 0" if it exists
-# they are bugs or daemons of memory_profiler
+
+# notes:
+# if a solution runs too fast (<0.1 sec), then memory-profiler misses it
+# for macOS, ignore its daemons which shows up on the graph usually as child 0
+
 
 
 @profile
@@ -51,12 +57,3 @@ def harness_run(soln, tests):
         p.join()
     print("Finished.")
 
-
-# def create_testfile():
-#     if os.path.exists("tmp.py"):
-#         print(True)
-#     else:
-#         print(False)
-
-
-# create_testfile()
