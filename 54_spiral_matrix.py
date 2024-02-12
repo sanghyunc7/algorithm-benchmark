@@ -1,3 +1,4 @@
+from test_harness.harness import harness_run
 class Solution:
     def spiralOrder(self, matrix):
         # use for loops in a while loop
@@ -40,10 +41,7 @@ class Solution:
                 print(ans[-1], i, left)
             left += 1
 
-
-harness = Solution()
-
-test = [
+test = [[
     [1, 2, 3, 4, 5, 6, 7],
     [8, 9, 10, 11, 12, 13, 14],
     [15, 16, 17, 18, 19, 20, 21],
@@ -54,7 +52,7 @@ test = [
     [50, 51, 52, 53, 54, 55, 56],
     [57, 58, 59, 60, 61, 62, 63],
     [64, 65, 66, 67, 68, 69, 70],
-]
+]]
 
 sol = [
     1,
@@ -128,8 +126,6 @@ sol = [
     39,
     46,
 ]
+if __name__ == "__main__":
+    harness_run(Solution(), [test])
 
-print()
-out = harness.spiralOrder(test)
-print(out)
-assert out == sol

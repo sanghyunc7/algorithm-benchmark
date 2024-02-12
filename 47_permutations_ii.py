@@ -45,10 +45,8 @@ class Solution:
         return ans
 
 
-harness = Solution()
-test1 = [1, 2, 3, 4, 5, 6, 7, 8]
-test2 = [1, 1, 1, 1, 1, 1, 1, 1]
-res1 = harness.permuteUnique2(test2)
-print(res1)
+test1 = [[1, 2, 3, 4, 5, 6, 7, 8]]
+test2 = [[1, 1, 1, 1, 1, 1, 1, 1]]
+
 if __name__ == "__main__":
     harness_run(Solution(), [test1, test2])

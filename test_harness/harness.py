@@ -11,7 +11,9 @@ import sys
 # pip install matplotlib
 
 # in your Solution file, e.g. naming_a_company.py
-# write:
+
+# 1. create tests. Each test should be a List of arguments as described by the Solution method definition. order of args matters.
+# 2. write:
 # from test_harness.harness import harness_run
 # if __name__ == "__main__":
 #     harness_run(Solution(), [test, test1])
@@ -31,14 +33,21 @@ import sys
 @profile
 def test_method(method, tests):
     print(os.getpid(), method.__name__)
-    # so that all lines appear first
-    # time.sleep(1)
+
     start = time.time()
     out = []
     for t in tests:
-        out.append(method(t))
+        rtn = method(*t)
+        if not rtn:
+            # the question must've asked for modifications to original input
+            rtn = t
+        flush = f"{os.getpid()} test output:\n{rtn}"
+        print(flush)
+        out.append(rtn)
+        
     end = time.time()
     print(f"{method.__name__} actual execution time: {end - start} seconds")
+    
     return out, end - start
 
 

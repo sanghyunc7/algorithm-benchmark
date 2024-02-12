@@ -3,7 +3,7 @@ import itertools
 from test_harness.harness import harness_run
 
 class Solution:
-    def threeSumMulti(self, arr):
+    def threeSumMulti(self, arr, target):
 
         d = collections.Counter(arr)
         arrkeys = list(d.keys())

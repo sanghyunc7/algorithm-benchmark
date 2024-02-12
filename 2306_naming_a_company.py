@@ -83,7 +83,7 @@ class Solution:
 
 
 harness = Solution()
-test = [
+test = [[
     "wjnhstvz",
     "es",
     "ohagsp",
@@ -1860,7 +1860,7 @@ test = [
     "qy",
     "ftxdp",
     "jcvywugrf",
-]
+]]
 
 if __name__ == "__main__":
     harness_run(Solution(), [test])

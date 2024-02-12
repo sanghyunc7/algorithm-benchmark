@@ -69,9 +69,8 @@ class Solution:
 
 
 # harness = Solution()
-test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-test1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+test = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]]
 # print(harness.makesquare1(test))
 
 if __name__ == "__main__":
-    harness_run(Solution(), [test1])
+    harness_run(Solution(), [test])
