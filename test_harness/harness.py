@@ -38,7 +38,7 @@ def test_method(method, tests):
     out = []
     for t in tests:
         rtn = method(*t)
-        if not rtn:
+        if rtn is None:
             # the question must've asked for modifications to original input
             rtn = t
         flush = f"{os.getpid()} test output:\n{rtn}"
