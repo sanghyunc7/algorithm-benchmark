@@ -7,8 +7,9 @@ import sys
 
 
 # dependencies installation:
-# pip install memory-profiler
-# pip install matplotlib
+# python3 -m venv venv
+# source venv/bin/activate
+# pip install -r requirements.txt
 
 # in your Solution file, e.g. naming_a_company.py
 
@@ -46,10 +47,29 @@ def test_method(method, tests):
         out.append(rtn)
         
     end = time.time()
-    print(f"{method.__name__} actual execution time: {end - start} seconds")
+    print(f"{method.__name__} total execution time: {end - start} seconds")
     
     return out, end - start
 
+
+def test_method_no_profiling(method, tests):
+    print(os.getpid(), method.__name__)
+
+    start = time.time()
+    out = []
+    for t in tests:
+        rtn = method(*t)
+        if rtn is None:
+            # the question must've asked for modifications to original input
+            rtn = t
+        flush = f"{os.getpid()} test output:\n{rtn}"
+        print(flush)
+        out.append(rtn)
+        
+    end = time.time()
+    print(f"{method.__name__} total execution time: {end - start} seconds")
+    
+    return out, end - start
 
 def harness_run(soln, tests):
     print(os.getpid(), "harness_run")
@@ -65,4 +85,14 @@ def harness_run(soln, tests):
     for p in processes:
         p.join()
     print("Finished.")
+
+def test_run(soln, tests, method=0):
+    print("test run")
+
+    attrs = (getattr(soln, name) for name in dir(soln))
+    methods = list(filter(inspect.ismethod, attrs))
+    for i in range(len(methods)):
+        if method == i:
+            test_method_no_profiling(methods[i], tests)
+            break
 
