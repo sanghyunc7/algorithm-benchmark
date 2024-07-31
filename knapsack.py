@@ -29,4 +29,5 @@ s = Solution()
 profit = [60, 100, 120]
 weights = [10, 20, 30]
 print(s.knapsack(51, weights, profit))
+
             
