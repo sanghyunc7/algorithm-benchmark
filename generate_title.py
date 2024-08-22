@@ -19,8 +19,17 @@ with open(filename, 'w') as file:
     file.write("from typing import List\n")
     file.write("from functools import *\n")
     file.write("from math import *\n")
-    file.write("from collections import defaultdict\n")
-    file.write("from test_harness.harness import harness_run\n")
+    file.write("from collections import *\n")
+    file.write("import heapq")
+    file.write("from test_harness.harness import *\n\n\n")
+
+    file.write('# if __name__ == "__main__":\n')
+    file.write("#     test_run(Solution(), [test, test1])\n")
+
+    file.write("# run:\n")
+    file.write("# mprof run -MC naming_a_company.py\n\n")
+    file.write("# run:\n")
+    file.write("# mprof plot\n")
 print(f"Created file {filename}")
     
     

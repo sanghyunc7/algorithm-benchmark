@@ -1,8 +1,35 @@
 from test_harness.harness import *
-from typing import *
 
 class Solution:
     def minStickers(self, stickers: List[str], target: str) -> int:
+        elements = 0
+
+        @lru_cache(maxsize=None)
+        def dfs(remain):
+            nonlocal elements
+            elements += 1
+            if remain == "": return 0
+
+            remain_counter = Counter(remain)
+            min_stickers = float("inf")
+
+            for sticker_counter in self.sticker_counters:
+                applied_counter = {c: max(count - sticker_counter[c], 0) for c, count in remain_counter.items()}
+                applied_counter_s = "".join(sorted([ch * count for ch, count in applied_counter.items()]))
+                
+                if applied_counter_s != remain:
+                    num_stickers = 1 + dfs(applied_counter_s)
+                    min_stickers = min(min_stickers, num_stickers)
+            
+            return min_stickers
+        self.sticker_counters = [Counter(sticker) for sticker in stickers]
+        target = "".join(sorted(target))
+
+        ans = dfs(target)
+        print(elements)
+        return -1 if ans == float("inf") else ans
+
+    def minStickers1(self, stickers: List[str], target: str) -> int:
         poolStickers = set()
         for s in stickers:
             for c in s:
@@ -11,23 +38,18 @@ class Solution:
             if not c in poolStickers:
                 return -1
         
-        # work in layers
-        # create a layer by trying all stickers on all elements from prev layer
-        # prune the layer by removing elements that are dominated
-        layer = []
-
-        target_tuple = [0] * 26
-        target_set = set()
+        t = [0] * 26
         for c in target:
-            target_tuple[ord(c) - ord('a')] += 1
-            target_set.add(c)
+            t[ord(c) - ord('a')] += 1
+        target_tuple = tuple(t)
 
         sticker_set = set()
         for s in stickers:
             t = [0] * 26
             for c in s:
-                if c in target_set:
-                    t[ord(c) - ord('a')] += 1
+                i = ord(c) - ord('a')
+                # saturation point
+                t[i] = min(t[i] + 1, target_tuple[i])
             sticker_set.add(tuple(t))
         
 
@@ -57,36 +79,26 @@ class Solution:
             return reduced_set
 
         def combine(t1, t2):
+            # optimization:
+            # reduce states by having a saturation point of target_tuple[i]
             t = []
             for i in range(26):
-                t.append(t1[i] + t2[i])
+                t.append(min(t1[i] + t2[i], target_tuple[i]))
             return t
-        
-        # does adding t2 help t1 get closer to target?
-        def useful(t1, t2):
-            good = False
-            for i in range(26):
-                if target_tuple[i] - t1[i] > 0 and t2[i] > 0:
-                    good = True
-                    break
-            return good
 
         
-        def found_target(t):
-            for i in range(26):
-                if t[i] < target_tuple[i]:
-                    return False
-            return True
         # print(len(stickers))
         # print(len(sticker_set))
         sticker_set = reduced(sticker_set)
         # print(len(sticker_set))
         layer = sticker_set.copy()
         n = 1
+
+        visit = set()
+        visit.update(layer)
         while True:
-            for t in layer:
-                if found_target(t):
-                    return n
+            if target_tuple in layer:
+                return n
 
             # try stickers + reduced_set permutations to create next layer
             next_layer = set()
@@ -94,9 +106,11 @@ class Solution:
                 for t1 in layer:
                     # optimization idea:
                     # combine a t2 that will only mark an improvement towards the goal
-                    if useful(t1, t2):
-                        next_layer.add(tuple(combine(t1, t2)))
+                    t = tuple(combine(t1, t2))
+                    if t not in visit:
+                        next_layer.add(t)
             layer = reduced(next_layer)
+            visit.update(layer)
             n += 1
             print("n", n)
             print(len(layer))
@@ -110,5 +124,5 @@ input1 = [["control","heart","interest","stream","sentence","soil","wonder","the
 input2 = [["all","chord","doctor","dance","drive","ready","phrase","skill","dress","select","if","develop","space","broad","lone","was","fight","how","window","place","has","plural","star","complete","though","rub","practice","here","nation","dark","job","observe","key","hole","short","last","neck","oh","science","industry","work","gun","rule","magnet","stead","many","push","tall","soft","road"], "thosecontinent"]
 input3 = [["divide","danger","student","share","feet","say","expect","chair","special","blue","differ","thank","doctor","top","there","had","ice","mark","note","equate","basic","so","hope","happy","draw","evening","star","shall","thousand","mother","quite","letter","atom","baby","such","trouble","stand","day","room","third","level","salt","thing","shore","truck","block","time","fresh","dream","talk"], "distantcollect"]
 if __name__ == "__main__":
-    test_run(Solution(), [input1, input2, input3])
+    test_run(Solution(), [input1, input2, input3], 1)
         

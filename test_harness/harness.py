@@ -1,5 +1,9 @@
 from multiprocessing import Process
 from memory_profiler import profile
+from typing import *
+from functools import *
+from math import *
+from collections import *
 import time
 import inspect
 import os
@@ -15,7 +19,7 @@ import sys
 
 # 1. create tests. Each test should be a List of arguments as described by the Solution method definition. order of args matters.
 # 2. write:
-# from test_harness.harness import harness_run
+# from test_harness.harness import *
 # if __name__ == "__main__":
 #     harness_run(Solution(), [test, test1])
 
@@ -33,7 +37,7 @@ import sys
 
 @profile
 def test_method(method, tests):
-    print(os.getpid(), method.__name__)
+    print(os.getpid(), "using method", method.__name__)
 
     start = time.time()
     out = []
@@ -42,7 +46,7 @@ def test_method(method, tests):
         if rtn is None:
             # the question must've asked for modifications to original input
             rtn = t
-        flush = f"{os.getpid()} test output:\n{rtn}"
+        flush = f"{os.getpid()} test output:\n{rtn}\n"
         print(flush)
         out.append(rtn)
         
@@ -53,8 +57,6 @@ def test_method(method, tests):
 
 
 def test_method_no_profiling(method, tests):
-    print(os.getpid(), method.__name__)
-
     start = time.time()
     out = []
     for t in tests:
@@ -62,7 +64,7 @@ def test_method_no_profiling(method, tests):
         if rtn is None:
             # the question must've asked for modifications to original input
             rtn = t
-        flush = f"{os.getpid()} test output:\n{rtn}"
+        flush = f"test output:\n{rtn}\n"
         print(flush)
         out.append(rtn)
         
@@ -87,12 +89,12 @@ def harness_run(soln, tests):
     print("Finished.")
 
 def test_run(soln, tests, method=0):
-    print("test run")
 
     attrs = (getattr(soln, name) for name in dir(soln))
     methods = list(filter(inspect.ismethod, attrs))
     for i in range(len(methods)):
         if method == i:
+            print(f"test run using method {methods[i].__name__}")
             test_method_no_profiling(methods[i], tests)
             break
 

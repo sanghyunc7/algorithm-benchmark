@@ -19,7 +19,8 @@ class Solution:
                     dp[i][j] = values[j]
                     continue
                 # don't include element j or include and use dp sub-result
-                dp[i][j] = dp[i][j - 1]
+                if j - 1 >= 0: # otherwise has value 0
+                    dp[i][j] = dp[i][j - 1]
                 if i - weights[j] >= 0:
                     dp[i][j] = max(dp[i][j], dp[i - weights[j]][j - 1] + values[j])
         
