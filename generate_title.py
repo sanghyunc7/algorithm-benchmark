@@ -20,7 +20,7 @@ with open(filename, 'w') as file:
     file.write("from functools import *\n")
     file.write("from math import *\n")
     file.write("from collections import *\n")
-    file.write("import heapq")
+    file.write("import heapq\n")
     file.write("from test_harness.harness import *\n\n\n")
 
     file.write('# if __name__ == "__main__":\n')

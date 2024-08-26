@@ -1,0 +1,8 @@
+Input                Accepted Time Complexity
+1) Around 10                   O(n!)
+2) 15 - 25                     O(2 ^ n * n) {read it as 2 to the power n multiply by n}
+3) 100                         O(n ^ 4)  {read it as n to the power four}
+4) 400.                        O(n ^ 3) {read it as n to the power three}
+5) 1000 (10 ^ 3)               O(n ^ 2) {read it as n to the power two}
+6) 10 ^ 5 or 10 ^ 6            O(n) and also O(n * log n)
+7) 10 ^ 9 or more              O(log n)
